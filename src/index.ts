@@ -22,8 +22,10 @@ app.get("/", (req, res) => {
 
 app.post("/add-user-to-course", async (req, res) => {
   console.log("Adding user to course");
+
   // Critical
   await addUserToCourseQuery();
+
   //Sending email via Queue
   await emailQueue.add(`${Date.now()}`, {
     from: "pranshu@gmail.com",
@@ -31,6 +33,7 @@ app.post("/add-user-to-course", async (req, res) => {
     subject: "Congrats on enrolling in Twitter Course",
     body: "Dear Student, You have been enrolled to Twitter Clone Course.",
   });
+  
   //earlier it blocking the critical task
   // await mockSendEmail({
   //   from: "pranshu@gmail.com",
